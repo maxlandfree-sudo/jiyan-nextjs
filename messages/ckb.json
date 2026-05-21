@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "news": "هەواڵ",
+    "opinion": "ڕای کەسی",
+    "sport": "وەرزش",
+    "culture": "کولتوور",
+    "lifestyle": "ژیانی ڕۆژانە",
+    "climate": "ئاووهەوا",
+    "newsletter": "نووسراوەی ئەلیکترۆنی",
+    "video": "ڤیدیۆ",
+    "puzzles": "پازڵ"
+  },
+  "ui": {
+    "subscribe": "بەشداربە",
+    "login": "چوونەژوورەوە",
+    "search": "گەڕان",
+    "readMore": "زیاتر بخوێنەوە",
+    "breakingNews": "LIVE",
+    "mostViewed": "زیاتر بینراو",
+    "weather": "کەشوهەوا",
+    "newsletter_cta": "بەشداری نووسراوەکەمان بە",
+    "international": "چاپی نێودەوڵەتی"
+  }
+}

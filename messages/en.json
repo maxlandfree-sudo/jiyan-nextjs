@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "news": "News",
+    "opinion": "Opinion",
+    "sport": "Sport",
+    "culture": "Culture",
+    "lifestyle": "Lifestyle",
+    "climate": "Climate",
+    "newsletter": "Newsletters",
+    "video": "Video",
+    "puzzles": "Puzzles"
+  },
+  "ui": {
+    "subscribe": "Subscribe",
+    "login": "Sign in",
+    "search": "Search",
+    "readMore": "Read more",
+    "breakingNews": "LIVE",
+    "mostViewed": "Most viewed",
+    "weather": "Weather",
+    "newsletter_cta": "Sign up for our newsletter",
+    "international": "International edition"
+  }
+}

@@ -1,0 +1,1188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Jiyan ژیان — Global CSS
+ * Speglar exakt designsystemet från index.html
+ * Stöder RTL (kurdiska sorani, farsi) och LTR (engelska)
+ */
+
+/* Google Fonts — Noto för arabiska/kurdiska typsnitt */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;600;700;900&display=swap');
+
+/* ── CSS-VARIABLER (designtoken) ── */
+:root {
+  /* Färgpalett — Guardian-inspirerad */
+  --navy:    #041f4a;
+  --blue:    #005689;
+  --blue-lt: #0084c6;
+  --red:     #c70000;
+  --yellow:  #ffbb00;
+  --white:   #ffffff;
+  --off:     #f6f6f6;
+  --border:  #dcdcdc;
+  --text:    #121212;
+  --muted:   #767676;
+
+  /* Kulturkategorifärger */
+  --culture: #005f4e;
+  --film:    #8b0000;
+  --music:   #6b3fa0;
+  --books:   #c05800;
+  --art:     #006064;
+  --theatre: #4a0080;
+
+  /* Typsnitt */
+  --serif: 'Noto Naskh Arabic', Georgia, serif;
+  --sans:  'Noto Sans Arabic', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Layout */
+  --max-width: 1300px;
+  --gutter:    20px;
+
+  /* Tema-variabler (ljust läge som standard) */
+  --bg:      #ffffff;
+  --surface: #f6f6f6;
+}
+
+/* ── MÖRKT LÄGE ── */
+[data-theme="dark"] {
+  --bg:      #121212;
+  --surface: #1e1e1e;
+  --text:    #f0f0f0;
+  --border:  #333333;
+  --off:     #1e1e1e;
+  --muted:   #999999;
+  --navy:    #0a2a5e;
+  --white:   #f0f0f0;
+}
+
+[data-theme="dark"] body {
+  background: var(--bg);
+  color:      var(--text);
+}
+
+[data-theme="dark"] .jiyan-main-nav,
+[data-theme="dark"] .jiyan-header,
+[data-theme="dark"] .jiyan-top-strip {
+  background: #061830;
+}
+
+[data-theme="dark"] .jiyan-newsletter-widget,
+[data-theme="dark"] .jiyan-opinion-strip {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .jiyan-rolling-strip {
+  background:    #1a1208;
+  border-color:  #3a2a18;
+}
+
+[data-theme="dark"] .strip-card {
+  border-color: #3a2a18;
+}
+
+[data-theme="dark"] .jiyan-section-block {
+  border-top-color: var(--blue-lt);
+}
+
+[data-theme="dark"] .jiyan-archive-card,
+[data-theme="dark"] .jiyan-puzzle-card {
+  background:   var(--surface);
+  border-color: var(--border);
+}
+
+/* ── RESET ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── BASSTIL ── */
+html {
+  font-size: 16px;
+}
+
+body {
+  background:   var(--white);
+  color:        var(--text);
+  font-family:  var(--sans);
+  line-height:  1.7;
+}
+
+/* RTL för kurdiska och farsi */
+html[lang="ckb"],
+html[lang="fa"] {
+  direction: rtl;
+}
+
+html[lang="ckb"] body,
+html[lang="fa"] body {
+  direction:  rtl;
+  text-align: right;
+}
+
+/* LTR för engelska */
+html[lang="en"] body {
+  direction:  ltr;
+  text-align: left;
+}
+
+a {
+  color:           inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  display:     block;
+  width:       100%;
+  height:      auto;
+  object-fit:  cover;
+}
+
+/* ── JIYAN KOMPONENT-KLASSER ── */
+
+/* Page wrapper */
+.jiyan-page-wrap {
+  max-width:  var(--max-width);
+  margin:     0 auto;
+  padding:    0 var(--gutter);
+}
+
+/* ── TOP STRIP ── */
+.jiyan-top-strip {
+  background: var(--navy);
+  color:      var(--white);
+  font-size:  0.75rem;
+  padding:    4px var(--gutter);
+  display:    flex;
+  justify-content: space-between;
+  align-items:     center;
+}
+.jiyan-top-strip a { color: #aac5d8; }
+.jiyan-top-strip a:hover { color: var(--white); text-decoration: none; }
+
+.jiyan-btn-subscribe {
+  background:    var(--yellow);
+  color:         var(--navy);
+  font-weight:   700;
+  font-size:     0.75rem;
+  padding:       4px 10px;
+  border-radius: 2px;
+}
+.jiyan-btn-subscribe:hover {
+  text-decoration: none;
+  background:      #e0a800;
+}
+
+/* ── HEADER ── */
+.jiyan-header { background: var(--navy); padding: 0 var(--gutter); }
+.jiyan-masthead-logo {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size:   2.8rem;
+  color:       var(--white);
+  line-height: 1;
+}
+.jiyan-masthead-date { color: #aac5d8; font-size: 0.75rem; margin-top: 4px; }
+
+/* ── MAIN NAV ── */
+.jiyan-main-nav {
+  background:  var(--navy);
+  border-top:  1px solid rgba(255,255,255,0.15);
+}
+.jiyan-nav-link {
+  color:          var(--white);
+  font-size:      0.88rem;
+  font-weight:    700;
+  padding:        10px 14px;
+  white-space:    nowrap;
+  display:        block;
+  border-bottom:  3px solid transparent;
+}
+.jiyan-nav-link:hover { border-bottom-color: var(--yellow); text-decoration: none; }
+.jiyan-nav-link.active { border-bottom-color: var(--yellow); }
+
+/* ── SECTION HEADER ── */
+.jiyan-section-header { background: var(--blue); padding: 0 var(--gutter); }
+.jiyan-section-title {
+  color:       var(--white);
+  font-family: var(--serif);
+  font-size:   1.9rem;
+  font-weight: 700;
+}
+
+/* ── BREAKING BAR ── */
+.jiyan-breaking-bar {
+  background: var(--red);
+  color:      var(--white);
+  font-size:  0.8rem;
+  padding:    7px var(--gutter);
+}
+.jiyan-breaking-label {
+  font-weight:   900;
+  font-size:     0.7rem;
+  background:    var(--white);
+  color:         var(--red);
+  padding:       2px 8px;
+  border-radius: 2px;
+  flex-shrink:   0;
+}
+
+/* ── ARTIKEL-KOMPONENTER ── */
+.article-kicker {
+  font-size:   0.75rem;
+  font-weight: 700;
+  color:       var(--blue);
+  margin-bottom: 5px;
+}
+.article-kicker.red   { color: var(--red); }
+.article-kicker.navy  { color: var(--navy); }
+
+.article-headline-hero {
+  font-family:  var(--serif);
+  font-size:    1.6rem;
+  font-weight:  700;
+  line-height:  1.4;
+  margin-bottom: 8px;
+  color:        var(--text);
+}
+
+.article-standfirst {
+  font-family:  var(--serif);
+  font-size:    0.95rem;
+  color:        #333;
+  line-height:  1.7;
+  margin-bottom: 8px;
+}
+
+.article-meta {
+  font-size:   0.75rem;
+  color:       var(--muted);
+  display:     flex;
+  gap:         8px;
+  flex-wrap:   wrap;
+}
+.article-author { color: var(--blue); font-weight: 600; }
+
+/* ── SECTION BLOCK ── */
+.jiyan-section-block {
+  border-top:    3px solid var(--blue);
+  padding-top:   6px;
+  margin-bottom: 24px;
+}
+.jiyan-section-block-title {
+  font-family:   var(--serif);
+  font-size:     1.1rem;
+  font-weight:   700;
+  color:         var(--blue);
+  margin-bottom: 14px;
+}
+
+/* ── OPINION STRIP ── */
+.jiyan-opinion-strip {
+  background:    var(--off);
+  border-top:    3px solid var(--navy);
+  padding:       16px var(--gutter) 20px;
+  margin-bottom: 24px;
+}
+.opinion-avatar {
+  width:          52px;
+  height:         52px;
+  border-radius:  50%;
+  background:     var(--blue);
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  font-weight:    900;
+  color:          var(--white);
+  font-size:      1.1rem;
+  margin-bottom:  8px;
+  overflow:       hidden;
+}
+
+/* ── ROLLING STRIP (Guardian-stil) ── */
+.jiyan-rolling-strip {
+  background:  #fdf0e8;
+  border-top:  1px solid #e0ccba;
+  border-bottom: 1px solid #e0ccba;
+}
+.strip-card {
+  display:        flex;
+  flex-direction: row;
+  align-items:    center;
+  gap:            12px;
+  padding:        13px 18px;
+  min-width:      210px;
+  max-width:      270px;
+  border-right:   1px solid #e0ccba;
+  cursor:         pointer;
+  flex-shrink:    0;
+  transition:     background 0.15s;
+  text-decoration: none;
+  color:          inherit;
+}
+.strip-card:hover { background: rgba(180,130,80,0.08); text-decoration: none; }
+.strip-title-red  { color: var(--red); }
+.strip-title-navy { color: var(--navy); }
+.strip-title-podcast { color: #7b2d8b; }
+.strip-title-green   { color: #005f4e; }
+.strip-circle {
+  width:          72px;
+  height:         72px;
+  border-radius:  50%;
+  flex-shrink:    0;
+  overflow:       hidden;
+  background:     var(--off);
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+}
+
+/* ── SIDEBAR ── */
+.jiyan-sidebar-widget-title {
+  font-size:     0.78rem;
+  font-weight:   700;
+  color:         var(--muted);
+  border-top:    3px solid var(--text);
+  padding-top:   6px;
+  margin-bottom: 12px;
+}
+.jiyan-sidebar-widget-title.blue-top    { border-top-color: var(--blue); }
+.jiyan-sidebar-widget-title.culture-top { border-top-color: var(--culture); }
+.jiyan-sidebar-widget-title.film-top    { border-top-color: var(--film); }
+.jiyan-sidebar-widget-title.music-top   { border-top-color: var(--music); }
+.jiyan-sidebar-widget-title.books-top   { border-top-color: var(--books); }
+.jiyan-sidebar-widget-title.art-top     { border-top-color: var(--art); }
+.jiyan-sidebar-widget-title.theatre-top { border-top-color: var(--theatre); }
+
+.jiyan-newsletter-widget {
+  background:    var(--off);
+  border:        1px solid var(--border);
+  padding:       14px;
+  border-radius: 2px;
+}
+
+/* ── 404-sida ── */
+.jiyan-404-section-link {
+  display:        block;
+  padding:        18px 16px;
+  color:          white;
+  font-weight:    700;
+  font-size:      1rem;
+  font-family:    var(--serif);
+  border-radius:  4px;
+  text-decoration: none;
+  transition:     opacity 0.15s;
+}
+.jiyan-404-section-link:hover {
+  opacity: 0.82;
+  text-decoration: none;
+}
+
+/* ── Puzzle-kortlänkar ── */
+.jiyan-archive-card {
+  display:        block;
+  background:     white;
+  border:         1px solid #dcdcdc;
+  border-radius:  4px;
+  padding:        14px;
+  text-decoration: none;
+  transition:     border-color 0.15s, box-shadow 0.15s;
+}
+.jiyan-archive-card:hover {
+  border-color: #6b21a8;
+  box-shadow:   0 2px 8px rgba(107,33,168,0.1);
+  text-decoration: none;
+}
+
+/* ── Kategori-artikelkort ── */
+.jiyan-category-article-link {
+  font-size:      0.95rem;
+  font-weight:    700;
+  color:          var(--navy);
+  font-family:    var(--serif);
+  line-height:    1.4;
+  text-decoration: none;
+  display:        block;
+}
+.jiyan-category-article-link:hover {
+  text-decoration: underline;
+}
+
+/* ── PuzzleCard hover ── */
+.jiyan-puzzle-card {
+  background:    white;
+  border:        1px solid #dcdcdc;
+  border-radius: 4px;
+  overflow:      hidden;
+  display:       flex;
+  flex-direction: column;
+  transition:    box-shadow 0.2s;
+}
+.jiyan-puzzle-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.jiyan-puzzle-play-btn {
+  display:         block;
+  color:           white;
+  text-align:      center;
+  padding:         10px 20px;
+  font-size:       0.88rem;
+  font-weight:     700;
+  border-radius:   3px;
+  text-decoration: none;
+  margin-top:      auto;
+  transition:      opacity 0.15s;
+}
+.jiyan-puzzle-play-btn:hover {
+  opacity: 0.88;
+  text-decoration: none;
+}
+
+/* ── Footer sociala ikoner ── */
+.jiyan-social-icon {
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  width:          34px;
+  height:         34px;
+  border-radius:  50%;
+  background:     rgba(255,255,255,0.08);
+  color:          rgba(255,255,255,0.7);
+  transition:     background 0.15s, color 0.15s;
+  border:         1px solid rgba(255,255,255,0.12);
+}
+.jiyan-social-icon:hover {
+  background: rgba(255,255,255,0.18);
+  color:      white;
+  text-decoration: none;
+}
+
+/* ── PAYWALL ── */
+.jiyan-paywall-banner {
+  background:    var(--off);
+  border:        1px solid var(--border);
+  border-right:  4px solid var(--blue);
+  padding:       14px 16px;
+  margin-bottom: 24px;
+  display:       flex;
+  align-items:   center;
+  gap:           16px;
+  border-radius: 2px 0 0 2px;
+}
+
+/* ── FOOTER ── */
+.jiyan-footer {
+  background:  var(--navy);
+  color:       rgba(255,255,255,0.7);
+  padding:     32px var(--gutter) 20px;
+  margin-top:  40px;
+}
+.jiyan-footer-logo {
+  font-family: var(--serif);
+  font-size:   2rem;
+  font-weight: 700;
+  color:       var(--white);
+  margin-bottom: 20px;
+}
+
+/* ── OPINION PAGE ── */
+
+/* Opinionsvariabler */
+:root {
+  --opinion:       #1a3a5c;
+  --opinion-light: #e8eef5;
+  --opinion-mid:   #2d5a8e;
+  --opinion-text:  #0d1f33;
+}
+
+/* Sektionsheader */
+.opinion-section-header {
+  background:    var(--opinion);
+  padding:       20px var(--gutter) 22px;
+  border-bottom: 3px solid var(--yellow);
+}
+.opinion-section-header-inner { max-width: var(--max-width); }
+.opinion-section-header-title {
+  font-family:  var(--serif);
+  font-size:    2.4rem;
+  font-weight:  700;
+  color:        var(--white);
+  line-height:  1.2;
+  margin-bottom: 6px;
+}
+.opinion-section-header-desc {
+  font-size:  0.88rem;
+  color:      rgba(255,255,255,0.75);
+  max-width:  620px;
+  line-height: 1.5;
+}
+
+/* ─── OPINION HERO ─── */
+.opinion-hero-wrapper {
+  border-top:    3px solid var(--opinion);
+  padding-top:   20px;
+  margin-bottom: 32px;
+}
+.opinion-hero-inner {
+  display:             grid;
+  grid-template-columns: 1fr 440px;
+  gap:                 40px;
+  align-items:         start;
+}
+.opinion-topic-badge {
+  display:       inline-block;
+  background:    var(--opinion);
+  color:         var(--white);
+  font-size:     0.72rem;
+  font-weight:   700;
+  padding:       3px 10px;
+  border-radius: 2px;
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+.opinion-hero-link { text-decoration: none; color: inherit; }
+.opinion-hero-link:hover .opinion-hero-headline { text-decoration: underline; }
+.opinion-hero-headline {
+  font-family:   var(--serif);
+  font-size:     1.95rem;
+  font-weight:   700;
+  line-height:   1.38;
+  color:         var(--opinion-text);
+  margin-bottom: 14px;
+}
+.opinion-hero-standfirst {
+  font-family:   var(--serif);
+  font-size:     1rem;
+  color:         #444;
+  line-height:   1.75;
+  margin-bottom: 20px;
+}
+
+/* Pullquote */
+.opinion-pullquote {
+  border-right:  4px solid var(--opinion);
+  padding:       12px 18px 12px 0;
+  margin:        0 0 22px 0;
+  font-family:   var(--serif);
+  font-size:     1.15rem;
+  font-style:    italic;
+  color:         var(--opinion);
+  line-height:   1.7;
+  quotes:        none;
+}
+.opinion-pullquote-mark {
+  font-size:    1.5rem;
+  font-style:   normal;
+  opacity:      0.55;
+  margin:       0 2px;
+}
+
+/* Hero-bild */
+.opinion-hero-img-wrap {
+  position:   relative;
+  display:    block;
+  width:      100%;
+  height:     320px;
+  overflow:   hidden;
+  flex-shrink: 0;
+}
+
+/* Hero-kolumnist */
+.opinion-hero-author {
+  display:     flex;
+  align-items: center;
+  gap:         12px;
+  margin-top:  6px;
+}
+.opinion-hero-avatar {
+  position:      relative;
+  width:         56px;
+  height:        56px;
+  border-radius: 50%;
+  overflow:      hidden;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  color:         var(--white);
+  font-weight:   900;
+  font-size:     1.1rem;
+  flex-shrink:   0;
+}
+.opinion-hero-author-name {
+  font-weight:   700;
+  font-size:     0.9rem;
+  color:         var(--opinion);
+}
+.opinion-hero-author-bio {
+  font-size:   0.78rem;
+  color:       var(--muted);
+  line-height: 1.4;
+}
+.opinion-hero-meta {
+  font-size:  0.75rem;
+  color:      var(--muted);
+  margin-top: 2px;
+}
+
+/* ─── OPINION SECTION BAR ─── */
+.opinion-section-bar {
+  display:         flex;
+  align-items:     baseline;
+  justify-content: space-between;
+  border-top:      3px solid var(--opinion);
+  padding-top:     6px;
+  margin-bottom:   20px;
+}
+.opinion-section-title {
+  font-family: var(--serif);
+  font-size:   1.15rem;
+  font-weight: 700;
+  color:       var(--opinion);
+}
+.opinion-view-all {
+  font-size:   0.78rem;
+  color:       var(--opinion);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.opinion-view-all:hover { text-decoration: underline; }
+
+/* ─── COLUMNIST GRID ─── */
+.columnist-grid-section { margin-bottom: 36px; }
+.columnist-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   20px;
+}
+.columnist-card {
+  border-top:  1px solid var(--border);
+  padding-top: 14px;
+}
+.columnist-avatar-link { display: block; margin-bottom: 10px; }
+.columnist-avatar {
+  position:       relative;
+  width:          80px;
+  height:         80px;
+  border-radius:  50%;
+  overflow:       hidden;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  color:          var(--white);
+  font-weight:    900;
+  font-size:      1.4rem;
+}
+.columnist-initials { user-select: none; }
+.columnist-name-link { text-decoration: none; }
+.columnist-name {
+  font-weight:   700;
+  font-size:     0.9rem;
+  color:         var(--opinion);
+  margin-bottom: 4px;
+}
+.columnist-name-link:hover .columnist-name { text-decoration: underline; }
+.columnist-bio {
+  font-size:     0.76rem;
+  color:         var(--muted);
+  line-height:   1.45;
+  margin-bottom: 8px;
+  white-space:   nowrap;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+}
+.columnist-latest-link { text-decoration: none; }
+.columnist-latest-headline {
+  font-family: var(--serif);
+  font-size:   0.85rem;
+  line-height: 1.5;
+  color:       var(--text);
+  display:     -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow:    hidden;
+}
+.columnist-latest-link:hover .columnist-latest-headline { text-decoration: underline; }
+
+/* ─── OPINION FEED ─── */
+.opinion-feed-section { margin-bottom: 40px; }
+.opinion-feed-list { display: flex; flex-direction: column; gap: 0; }
+.opinion-feed-item {
+  display:       grid;
+  gap:           24px;
+  padding:       22px 0;
+  border-bottom: 1px solid var(--border);
+  align-items:   start;
+}
+.opinion-feed-item.img-start {
+  grid-template-columns: 200px 1fr;
+}
+.opinion-feed-item.img-end {
+  grid-template-columns: 1fr 200px;
+}
+.opinion-feed-item.img-end .opinion-feed-img-link {
+  order: 2;
+}
+.opinion-feed-item.img-end .opinion-feed-body {
+  order: 1;
+}
+.opinion-feed-img-link { display: block; }
+.opinion-feed-img-wrap {
+  position: relative;
+  width:    100%;
+  height:   135px;
+  overflow: hidden;
+}
+.opinion-feed-topic {
+  font-size:     0.72rem;
+  font-weight:   700;
+  color:         var(--opinion);
+  margin-bottom: 5px;
+  letter-spacing: 0.02em;
+}
+.opinion-feed-link { text-decoration: none; color: inherit; }
+.opinion-feed-headline {
+  font-family:   var(--serif);
+  font-size:     1.05rem;
+  font-weight:   700;
+  line-height:   1.48;
+  margin-bottom: 8px;
+}
+.opinion-feed-link:hover .opinion-feed-headline { text-decoration: underline; }
+.opinion-feed-standfirst {
+  font-size:     0.85rem;
+  color:         #444;
+  line-height:   1.65;
+  margin-bottom: 10px;
+}
+.opinion-feed-author {
+  display:     flex;
+  align-items: center;
+  gap:         8px;
+}
+.opinion-feed-avatar {
+  position:       relative;
+  width:          36px;
+  height:         36px;
+  border-radius:  50%;
+  overflow:       hidden;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  color:          var(--white);
+  font-weight:    700;
+  font-size:      0.75rem;
+  flex-shrink:    0;
+}
+.opinion-feed-author-name {
+  font-size:   0.8rem;
+  font-weight: 700;
+  color:       var(--opinion);
+}
+.opinion-feed-date {
+  font-size: 0.72rem;
+  color:     var(--muted);
+}
+
+/* ─── DEBATE SECTION ─── */
+.debate-section {
+  border-top:    3px solid var(--opinion);
+  padding-top:   14px;
+  margin-bottom: 40px;
+  background:    var(--opinion-light);
+  padding:       20px 22px 26px;
+  border-radius: 2px;
+}
+.debate-header { margin-bottom: 20px; }
+.debate-label {
+  font-size:     0.72rem;
+  font-weight:   700;
+  color:         var(--opinion);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.debate-topic {
+  font-family: var(--serif);
+  font-size:   1.3rem;
+  font-weight: 700;
+  color:       var(--opinion-text);
+  line-height: 1.4;
+}
+.debate-columns {
+  display:     grid;
+  grid-template-columns: 1fr 40px 1fr;
+  gap:         16px;
+  align-items: start;
+}
+.debate-col { padding-top: 4px; }
+.debate-stance-badge {
+  display:       inline-block;
+  font-size:     0.72rem;
+  font-weight:   700;
+  padding:       3px 10px;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+.debate-pro-badge {
+  background: #1a5c2e;
+  color:      var(--white);
+}
+.debate-con-badge {
+  background: var(--red);
+  color:      var(--white);
+}
+.debate-link { text-decoration: none; color: inherit; }
+.debate-col-headline {
+  font-family:   var(--serif);
+  font-size:     1rem;
+  font-weight:   700;
+  line-height:   1.5;
+  margin-bottom: 10px;
+  color:         var(--opinion-text);
+}
+.debate-link:hover .debate-col-headline { text-decoration: underline; }
+.debate-col-summary {
+  font-size:     0.83rem;
+  color:         #444;
+  line-height:   1.65;
+  margin-bottom: 12px;
+}
+.debate-author {
+  display:     flex;
+  flex-direction: column;
+  gap:         2px;
+}
+.debate-author-name {
+  font-size:   0.8rem;
+  font-weight: 700;
+  color:       var(--opinion);
+  display:     block;
+}
+.debate-author-bio {
+  font-size: 0.72rem;
+  color:     var(--muted);
+}
+.debate-divider {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding-top:     30px;
+}
+.debate-vs {
+  background:    var(--opinion);
+  color:         var(--white);
+  font-weight:   900;
+  font-size:     0.75rem;
+  width:         32px;
+  height:        32px;
+  border-radius: 50%;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+/* ─── OPINION SIDEBAR ─── */
+.opinion-sidebar { display: flex; flex-direction: column; gap: 24px; }
+.opinion-sidebar-widget { margin-bottom: 4px; }
+.opinion-sidebar-widget-title {
+  font-size:     0.78rem;
+  font-weight:   700;
+  color:         var(--muted);
+  border-top:    3px solid var(--opinion);
+  padding-top:   6px;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.opinion-most-read-list {
+  list-style: none;
+  padding:    0;
+  margin:     0;
+}
+.opinion-most-read-item {
+  display:       flex;
+  gap:           10px;
+  padding:       10px 0;
+  border-bottom: 1px solid var(--border);
+  align-items:   start;
+}
+.opinion-most-read-num {
+  font-size:   1.5rem;
+  font-weight: 900;
+  color:       var(--opinion-light);
+  line-height: 1.1;
+  flex-shrink: 0;
+  width:       24px;
+  text-align:  center;
+  user-select: none;
+  color:       rgba(26,58,92,0.25);
+}
+.opinion-most-read-content { flex: 1; }
+.opinion-most-read-link {
+  font-family:   var(--serif);
+  font-size:     0.85rem;
+  font-weight:   700;
+  color:         var(--text);
+  line-height:   1.45;
+  text-decoration: none;
+  display:       block;
+  margin-bottom: 3px;
+}
+.opinion-most-read-link:hover { text-decoration: underline; color: var(--opinion); }
+.opinion-most-read-author {
+  font-size: 0.72rem;
+  color:     var(--opinion);
+  font-weight: 600;
+}
+
+/* Newsletter widget */
+.opinion-newsletter-widget {
+  background:    var(--opinion-light);
+  border:        1px solid rgba(26,58,92,0.15);
+  padding:       16px;
+  border-radius: 2px;
+  border-top:    3px solid var(--opinion);
+}
+.opinion-newsletter-icon {
+  font-size:     1.5rem;
+  margin-bottom: 6px;
+  color:         var(--opinion);
+}
+.opinion-newsletter-label {
+  font-size:     0.82rem;
+  font-weight:   700;
+  color:         var(--opinion-text);
+  margin-bottom: 6px;
+}
+.opinion-newsletter-desc {
+  font-size:     0.78rem;
+  color:         #555;
+  line-height:   1.55;
+  margin-bottom: 12px;
+}
+.opinion-newsletter-form {
+  display:       flex;
+  flex-direction: column;
+  gap:           8px;
+  margin-bottom: 8px;
+}
+.opinion-newsletter-input {
+  width:         100%;
+  padding:       8px 10px;
+  border:        1px solid rgba(26,58,92,0.3);
+  border-radius: 2px;
+  font-size:     0.82rem;
+  font-family:   var(--sans);
+  background:    var(--white);
+  color:         var(--text);
+}
+.opinion-newsletter-input:focus { outline: 2px solid var(--opinion); }
+.opinion-newsletter-btn {
+  background:    var(--opinion);
+  color:         var(--white);
+  border:        none;
+  padding:       9px 14px;
+  font-size:     0.82rem;
+  font-weight:   700;
+  font-family:   var(--sans);
+  cursor:        pointer;
+  border-radius: 2px;
+  transition:    background 0.15s;
+}
+.opinion-newsletter-btn:hover { background: var(--opinion-mid); }
+.opinion-newsletter-privacy {
+  font-size: 0.7rem;
+  color:     var(--muted);
+}
+.opinion-newsletter-privacy a { color: var(--opinion); }
+
+/* Tags */
+.opinion-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.opinion-tag {
+  background:    var(--off);
+  border:        1px solid var(--border);
+  padding:       4px 9px;
+  font-size:     0.72rem;
+  color:         var(--opinion);
+  border-radius: 2px;
+  text-decoration: none;
+  white-space:   nowrap;
+  transition:    background 0.12s;
+}
+.opinion-tag:hover { background: var(--opinion-light); text-decoration: none; }
+
+/* ─── OPINION RESPONSIVE ─── */
+@media (max-width: 1000px) {
+  .opinion-main-grid { grid-template-columns: 1fr !important; }
+  .opinion-hero-inner { grid-template-columns: 1fr !important; }
+  .opinion-hero-img-wrap { height: 240px !important; }
+  .columnist-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .debate-columns { grid-template-columns: 1fr !important; }
+  .debate-divider { display: none; }
+}
+@media (max-width: 760px) {
+  .columnist-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .opinion-feed-item.img-start,
+  .opinion-feed-item.img-end { grid-template-columns: 1fr !important; }
+  .opinion-feed-item.img-end .opinion-feed-img-link { order: 0 !important; }
+  .opinion-feed-item.img-end .opinion-feed-body   { order: 1 !important; }
+  .opinion-feed-img-wrap { height: 200px !important; }
+}
+@media (max-width: 500px) {
+  .columnist-grid { grid-template-columns: 1fr !important; }
+  .opinion-section-header-title { font-size: 1.8rem !important; }
+}
+
+/* ── SEKTIONSFÄRGER: KLIMAT / LIVSSTIL / VIDEO ── */
+:root {
+  --climate:   #005f4e;
+  --lifestyle: #c2410c;
+  --video:     #8b1a1a;
+}
+
+/* ── MOBILE NAVIGATION DRAWER ── */
+
+/* Overlay/backdrop */
+.jiyan-mobile-overlay {
+  position:   fixed;
+  inset:      0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index:    200;
+  backdrop-filter: blur(2px);
+  animation:  fadeOverlay 0.2s ease;
+}
+
+@keyframes fadeOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Drawer-panel */
+.jiyan-mobile-drawer {
+  position:         fixed;
+  top:              0;
+  inset-inline-end: 0;               /* RTL: höger sida */
+  width:            min(320px, 85vw);
+  height:           100dvh;
+  background:       var(--navy);
+  z-index:          300;
+  overflow-y:       auto;
+  transform:        translateX(100%); /* Startar utanför skärmen */
+  transition:       transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:       -4px 0 24px rgba(0, 0, 0, 0.4);
+  padding-top:      env(safe-area-inset-top, 0px);
+}
+
+/* RTL: drawer glider in från höger */
+html[lang="ckb"] .jiyan-mobile-drawer,
+html[lang="fa"]  .jiyan-mobile-drawer {
+  transform: translateX(100%);
+}
+
+.jiyan-mobile-drawer.open {
+  transform: translateX(0);
+}
+
+/* Desktop: dölj hamburger, visa skrivbordsmeny */
+.jiyan-hamburger {
+  display: none !important;
+}
+
+/* ── SUBCATEGORY NAVIGATION ── */
+.jiyan-subcategory-nav::-webkit-scrollbar { display: none; }
+
+.jiyan-subcategory-chip:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color:      white !important;
+}
+
+/* ── SKELETON / LOADING PLACEHOLDER ── */
+.jiyan-skeleton {
+  background:      linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation:       shimmer 1.5s infinite;
+  border-radius:   4px;
+  min-height:      120px;
+}
+
+[data-theme="dark"] .jiyan-skeleton {
+  background:      linear-gradient(90deg, #2a2a2a 25%, #333333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── SCROLL REVEAL ANIMATION ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+main { animation: fadeIn 0.35s ease; }
+
+.reveal {
+  opacity:    0;
+  transform:  translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1000px) {
+  .jiyan-sidebar { display: none; }
+  .content-grid  { grid-template-columns: 1fr !important; }
+  /* Kultursida: bokhylla */
+  .culture-book-shelf { grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+/* ── MOBIL NAVIGATION (max 768px) ── */
+@media (max-width: 768px) {
+  /* Dölj skrivbordsmeny, visa hamburger */
+  .jiyan-nav-desktop { display: none !important; }
+  .jiyan-hamburger   { display: flex !important; padding: 6px 20px; }
+}
+
+@media (max-width: 760px) {
+  .jiyan-masthead-logo { font-size: 2rem; }
+  /* Kultursida: album-grid och kortrad */
+  .culture-album-grid,
+  .culture-card-row    { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Kultursida: two-col och three-col kollapsar */
+  .culture-two-col,
+  .culture-three-col,
+  .culture-opinion-grid { grid-template-columns: 1fr !important; }
+  /* Hero-grid */
+  .culture-hero-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ── MOBIL TOPSTRIP (max 640px) ── */
+@media (max-width: 640px) {
+  /* Dölj vänster sida i TopStrip (datum/nyhetsbrev) */
+  .jiyan-top-strip-left       { display: none !important; }
+  /* Dölj prenumerera och stöd-länk */
+  .jiyan-top-strip-support    { display: none !important; }
+  .jiyan-btn-subscribe        { display: none !important; }
+  /* Dölj språkväxlare */
+  .jiyan-top-strip-lang       { display: none !important; }
+  /* Dölj nyhetsbrev-länk */
+  .jiyan-top-strip-newsletter { display: none !important; }
+}
+
+@media (max-width: 500px) {
+  .jiyan-top-strip-left { display: none !important; }
+  .culture-album-grid,
+  .culture-card-row      { grid-template-columns: 1fr !important; }
+  .culture-book-shelf    { grid-template-columns: repeat(2, 1fr) !important; }
+}

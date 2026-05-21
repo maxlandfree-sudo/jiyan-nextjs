@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "news": "Nûçe",
+    "opinion": "Raман",
+    "sport": "Werzîş",
+    "culture": "Çand",
+    "lifestyle": "Jiyana Rojane",
+    "climate": "Klîma",
+    "newsletter": "Koname",
+    "video": "Vîdyo",
+    "puzzles": "Puzzle"
+  },
+  "ui": {
+    "subscribe": "Beşdar bibe",
+    "login": "Têkeve",
+    "search": "Gerîn",
+    "readMore": "Zêdetir bixwîne",
+    "breakingNews": "LIVE",
+    "mostViewed": "Zêdetir hatiye dîtin",
+    "weather": "Hewa",
+    "newsletter_cta": "Konameyê me bixwîne",
+    "international": "Çapa Navneteweyî"
+  }
+}

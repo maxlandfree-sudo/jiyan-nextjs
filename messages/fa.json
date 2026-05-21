@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "news": "اخبار",
+    "opinion": "دیدگاه",
+    "sport": "ورزش",
+    "culture": "فرهنگ",
+    "lifestyle": "سبک زندگی",
+    "climate": "آب‌وهوا",
+    "newsletter": "خبرنامه",
+    "video": "ویدیو",
+    "puzzles": "پازل"
+  },
+  "ui": {
+    "subscribe": "اشتراک",
+    "login": "ورود",
+    "search": "جستجو",
+    "readMore": "بیشتر بخوانید",
+    "breakingNews": "LIVE",
+    "mostViewed": "پربازدیدترین",
+    "weather": "آب و هوا",
+    "newsletter_cta": "عضو خبرنامه شوید",
+    "international": "نسخه بین‌المللی"
+  }
+}
