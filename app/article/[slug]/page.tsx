@@ -8,6 +8,9 @@ import { Footer } from '@/components/layout/Footer'
 import { ShareButtons } from '@/components/articles/ShareButtons'
 import Image from 'next/image'
 import Link from 'next/link'
+import { client, isSanityConfigured } from '@/sanity/lib/client'
+import { ARTICLE_BY_SLUG_QUERY } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
 
 // Artikeldatat (placeholder — i produktion: params.slug -> Sanity query)
 const ARTICLE = {
@@ -84,8 +87,42 @@ interface ArticlePageProps {
   params: { slug: string }
 }
 
-export default function ArticlePage({ params: _params }: ArticlePageProps) {
-  const article = ARTICLE
+export default async function ArticlePage({ params }: ArticlePageProps) {
+  let sanityArticle = null
+  if (isSanityConfigured) {
+    try {
+      sanityArticle = await client.fetch(ARTICLE_BY_SLUG_QUERY, { slug: params.slug })
+    } catch (err) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error('[Jiyan] Artikel-fetch misslyckades för slug:', params.slug, err)
+      }
+    }
+  }
+
+  const article = {
+    headline:    sanityArticle?.headline?.ckb || sanityArticle?.headline?.en || ARTICLE.headline,
+    standfirst:  sanityArticle?.standfirst?.ckb || sanityArticle?.standfirst?.en || ARTICLE.standfirst,
+    imageUrl:    sanityArticle?.coverImage?.asset
+                   ? urlFor(sanityArticle.coverImage).width(1200).height(630).fit('crop').url()
+                   : ARTICLE.imageUrl,
+    imageCaption: ARTICLE.imageCaption,
+    author: {
+      name:        sanityArticle?.author?.nameKurdi || sanityArticle?.author?.name || ARTICLE.author.name,
+      bio:         sanityArticle?.author?.bio || ARTICLE.author.bio,
+      avatarColor: sanityArticle?.author?.avatarColor || ARTICLE.author.avatarColor,
+      initials:    sanityArticle?.author?.initials || ARTICLE.author.initials,
+    },
+    publishedAt:  sanityArticle?.publishedAt
+                    ? new Date(sanityArticle.publishedAt).toLocaleDateString('ar-IQ', { day: 'numeric', month: 'long', year: 'numeric' })
+                    : ARTICLE.publishedAt,
+    updatedAt:    ARTICLE.updatedAt,
+    readingTime:  ARTICLE.readingTime,
+    kicker:      (sanityArticle?.kicker?.ckb || sanityArticle?.kicker?.en || ARTICLE.kicker) as string,
+    kickerColor:  '#003580',
+    topic:        ARTICLE.topic,
+    slug:         params.slug,
+    body:         ARTICLE.body,
+  }
 
   return (
     <>

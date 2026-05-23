@@ -82,7 +82,6 @@ export default function LocaleError({
           }}>
             ببوورە، کێشەیەکی نەچاوەڕێکراو ڕوویدا. تکایە دووبارە هەوڵ بدە یان بگەڕێیتەوە بۆ پەڕەی سەرەکی.
           </p>
-
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <button
               onClick={reset}

@@ -14,7 +14,16 @@ function getBannerBg(kickerColor?: 'blue' | 'red' | 'navy'): string {
 }
 
 export function NewsBannerGrid({ articles }: NewsBannerGridProps) {
-  if (articles.length === 0) return null
+  if (!articles || articles.length === 0) {
+    if (process.env.NODE_ENV === 'development') {
+      return (
+        <div style={{ padding: '16px', background: '#fff3cd', border: '1px solid #ffc107', marginBottom: '16px', fontFamily: 'monospace', fontSize: '0.8rem' }}>
+          Inga Sanity-artiklar laddade — kontrollera NEXT_PUBLIC_SANITY_PROJECT_ID i .env.local och starta om servern
+        </div>
+      )
+    }
+    return null
+  }
 
   const [featured, ...rest] = articles
 

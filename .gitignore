@@ -39,3 +39,10 @@ next-env.d.ts
 
 # sanity
 .sanity/
+
+# claude / claude-flow local config
+.claude/
+.claude-flow/
+
+# stray empty files
+next

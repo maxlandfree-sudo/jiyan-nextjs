@@ -79,6 +79,7 @@ export function Navigation() {
           style={{
             maxWidth:       'var(--max-width)',
             display:        'flex',
+            direction:      'rtl',
             gap:            0,
             overflowX:      'auto',
             scrollbarWidth: 'none',
