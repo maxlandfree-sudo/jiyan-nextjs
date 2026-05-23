@@ -13,6 +13,7 @@ import { siteSettingsSchema } from './sanity/schemas/siteSettings'
 export default defineConfig({
   name: 'jiyan',
   title: 'Jiyan ژیان — Redaktionssystem',
+  basePath: '/studio',
 
   // Ersätt med ditt faktiska Sanity-projekt-ID
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'din-projekt-id',

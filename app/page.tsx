@@ -7,6 +7,8 @@ export const revalidate = 3600
 import { Suspense } from 'react'
 import { client, isSanityConfigured } from '@/sanity/lib/client'
 import { HOMEPAGE_ARTICLES_QUERY } from '@/sanity/lib/queries'
+import { urlFor } from '@/sanity/lib/image'
+import type { ArticleCardData } from '@/components/articles/ArticleCard'
 import { Navigation } from '@/components/layout/Navigation'
 import { TopStrip } from '@/components/layout/TopStrip'
 import { SectionHeader } from '@/components/layout/SectionHeader'
@@ -20,6 +22,7 @@ import { Sidebar } from '@/components/sidebar/Sidebar'
 import { Footer } from '@/components/layout/Footer'
 import { PaywallBanner } from '@/components/ui/PaywallBanner'
 import { JoinCTA }      from '@/components/ui/JoinCTA'
+import { NewsBannerGrid } from '@/components/articles/NewsBannerGrid'
 
 // Statiska artikeldata (från index.html) — ersätts med Sanity-queries i produktion
 const heroArticle = {
@@ -305,7 +308,43 @@ const mostViewedArticles = [
 
 // ── Sanity-datahämtning med graceful fallback ────────────────────────────────
 
-async function getSanityArticles() {
+// Typ för rådata från Sanity (GROQ-svar)
+interface SanityArticleRaw {
+  _id:          string
+  headline?:    { ckb?: string; fa?: string; en?: string }
+  standfirst?:  { ckb?: string; fa?: string; en?: string }
+  kicker?:      { ckb?: string; fa?: string; en?: string }
+  kickerColor?: 'blue' | 'red' | 'navy'
+  coverImage?:  { _type: string; asset?: { _ref: string } }
+  publishedAt?: string
+  isPremium?:   boolean
+  featured?:    boolean
+  locale?:      string
+  slug:         { current: string }
+  author?:      { name?: string; nameKurdi?: string; initials?: string; avatarColor?: string }
+}
+
+// Omvandlar Sanity-rådata till ArticleCardData
+function mapSanityArticle(raw: SanityArticleRaw): ArticleCardData {
+  return {
+    id:          raw._id,
+    headline:    raw.headline    ?? {},
+    standfirst:  raw.standfirst  ?? undefined,
+    kicker:      raw.kicker      ?? undefined,
+    kickerColor: raw.kickerColor ?? 'blue',
+    imageUrl:    raw.coverImage?.asset
+                   ? urlFor(raw.coverImage).width(800).height(400).fit('crop').url()
+                   : undefined,
+    publishedAt: raw.publishedAt
+                   ? new Date(raw.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+                   : undefined,
+    isPremium:   raw.isPremium ?? false,
+    slug:        raw.slug,
+    author:      raw.author ?? undefined,
+  }
+}
+
+async function getSanityArticles(): Promise<SanityArticleRaw[] | null> {
   if (!isSanityConfigured) return null
   try {
     return await client.fetch(HOMEPAGE_ARTICLES_QUERY)
@@ -317,7 +356,41 @@ async function getSanityArticles() {
 // Exportera startsidan som Server Component
 export default async function HomePage() {
   // Hämtar från Sanity om env finns, annars används statisk data nedan
-  await getSanityArticles()
+  const rawArticles = await getSanityArticles()
+  const sanityArticles: ArticleCardData[] = rawArticles
+    ? rawArticles.map(mapSanityArticle)
+    : []
+
+  // Välj hero: featured-artikel eller första i listan
+  const sanityHero = sanityArticles.find((a) => (rawArticles?.find((r) => r._id === a.id)?.featured)) ?? sanityArticles[0]
+  // Side-artiklar: de tre nästa efter hero
+  const sanityHeroSide = sanityArticles.filter((a) => a.id !== sanityHero?.id).slice(0, 3)
+
+  // Slå ihop Sanity-data med statisk fallback
+  const resolvedHeroArticle     = sanityHero ?? heroArticle
+  const resolvedHeroSideArticles = sanityHeroSide.length > 0 ? sanityHeroSide : heroSideArticles
+
+  // Kortrad 1: använd Sanity-artiklar om det finns minst 4, annars statisk fallback
+  const resolvedCardRow1: ArticleCardData[] = sanityArticles.length >= 4
+    ? sanityArticles.slice(0, 4)
+    : cardRowArticles1
+
+  // Skapa dynamiska kort för rolling strip från Sanity-artiklar om de finns
+  const resolvedStripCards = [
+    // Vi behåller podcasten först
+    stripCards[0],
+    // Sedan fyller vi på med de senaste artiklarna från Sanity (max 5 st)
+    ...(sanityArticles.length > 0
+      ? sanityArticles.slice(0, 5).map((a) => ({
+          href: `/article/${a.slug.current}`,
+          kicker: a.kicker?.ckb || a.kicker?.fa || a.kicker?.en || 'هەواڵ',
+          title: a.headline.ckb || a.headline.fa || a.headline.en || '',
+          titleColor: (a.kickerColor === 'red' ? 'red' : a.kickerColor === 'navy' ? 'navy' : 'red') as 'red' | 'navy' | 'green',
+          image: a.imageUrl,
+        }))
+      : stripCards.slice(1))
+  ]
+
   return (
     <>
       {/* Toppmeny */}
@@ -364,7 +437,7 @@ export default async function HomePage() {
       />
 
       {/* Rolling strip */}
-      <RollingStrip cards={stripCards} />
+      <RollingStrip cards={resolvedStripCards} />
 
       <main>
         <div className="jiyan-page-wrap" style={{ maxWidth: 'var(--max-width)' }}>
@@ -376,14 +449,25 @@ export default async function HomePage() {
               {/* Paywallbanner */}
               <PaywallBanner />
 
+              {sanityArticles.length > 0 && (
+                <div style={{ marginBottom: '24px' }}>
+                  <div style={{ borderTop: '3px solid var(--blue)', paddingTop: '8px', marginBottom: '12px' }}>
+                    <h2 style={{ fontFamily: 'var(--serif)', fontSize: '0.95rem', fontWeight: 700, color: 'var(--blue)' }}>
+                      دوایین هەواڵ
+                    </h2>
+                  </div>
+                  <NewsBannerGrid articles={sanityArticles} />
+                </div>
+              )}
+
               {/* Hero-sektion */}
               <HeroSection
-                heroArticle={heroArticle}
-                sideArticles={heroSideArticles}
+                heroArticle={resolvedHeroArticle}
+                sideArticles={resolvedHeroSideArticles}
               />
 
               {/* Kortrad 1 */}
-              <CardRow articles={cardRowArticles1} />
+              <CardRow articles={resolvedCardRow1} />
 
               {/* Opinionsstrip */}
               <OpinionStrip articles={opinionArticles} />

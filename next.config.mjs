@@ -6,6 +6,15 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/structure/:path*',
+        destination: '/studio/structure/:path*',
+        permanent: false,
+      },
+    ]
+  },
   images: {
     remotePatterns: [
       {

@@ -14,6 +14,7 @@ export const HOMEPAGE_ARTICLES_QUERY = groq`
     publishedAt,
     articleType,
     isPremium,
+    featured,
     slug,
     "author": author-> { name, nameKurdi, initials, avatarColor, photo },
     "category": category-> { title, slug, color }

@@ -1,11 +1,8 @@
-'use client'
+export { metadata, viewport } from 'next-sanity/studio'
+export const dynamic = 'force-static'
 
-// Inbyggd Sanity Studio — tillgänglig på /studio
-// Kräver NEXT_PUBLIC_SANITY_PROJECT_ID i .env.local
-
-import { NextStudio } from 'next-sanity/studio'
-import config from '@/sanity.config'
+import { Studio } from './Studio'
 
 export default function StudioPage() {
-  return <NextStudio config={config} />
+  return <Studio />
 }

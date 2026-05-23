@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sanity": "sanity dev"
+    "sanity": "sanity dev --port 3335"
   },
   "dependencies": {
     "next": "14.2.3",

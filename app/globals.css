@@ -1083,13 +1083,21 @@ img {
   padding-top:      env(safe-area-inset-top, 0px);
 }
 
-/* RTL: drawer glider in från höger */
+/* RTL: drawer sitter vid inlineEnd=left (vänster kant) — döljs åt vänster */
 html[lang="ckb"] .jiyan-mobile-drawer,
-html[lang="fa"]  .jiyan-mobile-drawer {
-  transform: translateX(100%);
+html[lang="fa"]  .jiyan-mobile-drawer,
+[dir="rtl"]      .jiyan-mobile-drawer {
+  transform: translateX(-100%);
 }
 
 .jiyan-mobile-drawer.open {
+  transform: translateX(0);
+}
+
+/* RTL open: explicit override så .open inte åsidosätts av specificitetsordning */
+html[lang="ckb"] .jiyan-mobile-drawer.open,
+html[lang="fa"]  .jiyan-mobile-drawer.open,
+[dir="rtl"]      .jiyan-mobile-drawer.open {
   transform: translateX(0);
 }
 
@@ -1146,6 +1154,14 @@ main { animation: fadeIn 0.35s ease; }
   /* Kultursida: bokhylla */
   .culture-book-shelf { grid-template-columns: repeat(3, 1fr) !important; }
 }
+
+/* ── DESKTOP NAVIGATION ── */
+.jiyan-nav-desktop {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.jiyan-nav-desktop::-webkit-scrollbar { display: none; }
 
 /* ── MOBIL NAVIGATION (max 768px) ── */
 @media (max-width: 768px) {
